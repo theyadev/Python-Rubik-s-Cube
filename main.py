@@ -150,9 +150,8 @@ def turnVertical(layer_to_move, nb=1, reverse=False):
                 elif layer_index == 5:
                     index = 2
 
-            for j in range(len(SIDE_LAYERS)):
-                for k in range(len(SIDE_LAYERS[j][1])):
-                    cube[index][k][0 if index == 4 else layer_to_move] = layer[k]
+            for k in range(len(layer)):
+                cube[index][k][0 if index == 4 else layer_to_move] = layer[k]
 
         if layer_to_move == 0:
             if reverse:
