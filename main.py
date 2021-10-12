@@ -193,17 +193,17 @@ def printCube():
             row = ""
             for x in range(len(cube[z][y])):
                 if cube[z][y][x] == 6:
-                    row += f"{BackgroundColors.WHITE}[]{BackgroundColors.RESET}"
+                    row += f"🔳"
                 elif cube[z][y][x] == 2:
-                    row += f"{BackgroundColors.RED}[]{BackgroundColors.RESET}"
+                    row += f"🟥"
                 elif cube[z][y][x] == 3:
-                    row += f"{BackgroundColors.GREEN}[]{BackgroundColors.RESET}"
+                    row += f"🟩"
                 elif cube[z][y][x] == 4:
-                    row += f"{BackgroundColors.MAGENTA}[]{BackgroundColors.RESET}"
+                    row += f"🟧"
                 elif cube[z][y][x] == 5:
-                    row += f"{BackgroundColors.BLUE}[]{BackgroundColors.RESET}"
+                    row += f"🟦"
                 elif cube[z][y][x] == 1:
-                    row += f"{BackgroundColors.YELLOW}[]{BackgroundColors.RESET}"
+                    row += f"🟨"
 
             if z == 0:
                 printAt(8, 1 + y, row)
@@ -298,7 +298,7 @@ def moveCube(alg, speed):
         printCube()
         sleep(speed)
         
-shuffle = shuffleCube()
+shuffle = shuffleCube(10)
 moveCube(shuffle, 0.1)
 printCube()
 
