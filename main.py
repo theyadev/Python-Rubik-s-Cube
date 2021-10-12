@@ -57,11 +57,11 @@ class BackgroundColors:
 
 def turnHorizontal(layer_to_move, nb=1, reverse=False):
     for i in range(nb):
-        UP_LAYERS = [(j, cube[j][layer_to_move])
+        HORIZONTAL_LAYERS = [(j, cube[j][layer_to_move])
                      for j in range(len(cube)) if j != 0 and j != 5]
-        for i in range(len(UP_LAYERS)):
+        for i in range(len(HORIZONTAL_LAYERS)):
             index = 0
-            layer_index, layer = UP_LAYERS[i]
+            layer_index, layer = HORIZONTAL_LAYERS[i]
 
             if reverse == True:
                 if layer_index == 4:
@@ -117,19 +117,19 @@ def turnHorizontal(layer_to_move, nb=1, reverse=False):
 
 def turnVertical(layer_to_move, nb=1, reverse=False):
     for i in range(nb):
-        SIDE_LAYERS = [(j, [cube[j][k][layer_to_move] for k in range(len(cube[j]))])
+        VERTICAL_LAYERS = [(j, [cube[j][k][layer_to_move] for k in range(len(cube[j]))])
                        for j in range(len(cube)) if j != 1 and j != 3 and j != 4 and j != 0]
         if reverse == True:
-            SIDE_LAYERS.append((4, [cube[4][0][0], cube[4][1][0],cube[4][2][0]]))
-            SIDE_LAYERS.append((0, [cube[0][0][layer_to_move], cube[0][1][layer_to_move],cube[0][2][layer_to_move]]))
+            VERTICAL_LAYERS.append((4, [cube[4][0][0 if layer_to_move == 2 else 2 if layer_to_move == 0 else 1], cube[4][1][0 if layer_to_move == 2 else 2 if layer_to_move == 0 else 1],cube[4][2][0 if layer_to_move == 2 else 2 if layer_to_move == 0 else 1]]))
+            VERTICAL_LAYERS.append((0, [cube[0][0][layer_to_move], cube[0][1][layer_to_move],cube[0][2][layer_to_move]]))
         else:
-            SIDE_LAYERS.append((4, [cube[4][2][0], cube[4][1][0], cube[4][0][0]]))
-            SIDE_LAYERS.append(
+            VERTICAL_LAYERS.append((4, [cube[4][2][0 if layer_to_move == 2 else 2 if layer_to_move == 0 else 1], cube[4][1][0 if layer_to_move == 2 else 2 if layer_to_move == 0 else 1], cube[4][0][0 if layer_to_move == 2 else 2 if layer_to_move == 0 else 1]]))
+            VERTICAL_LAYERS.append(
                 (0, [cube[0][2][layer_to_move], cube[0][1][layer_to_move], cube[0][0][layer_to_move]]))
 
-        for D in range(len(SIDE_LAYERS)):
+        for D in range(len(VERTICAL_LAYERS)):
             index = 0
-            layer_index, layer = SIDE_LAYERS[D]
+            layer_index, layer = VERTICAL_LAYERS[D]
 
             if reverse:
                 if layer_index == 0:
@@ -151,7 +151,7 @@ def turnVertical(layer_to_move, nb=1, reverse=False):
                     index = 2
 
             for k in range(len(layer)):
-                cube[index][k][0 if index == 4 else layer_to_move] = layer[k]
+                cube[index][k][0 if index == 4 and layer_to_move == 2 else 2 if index==4 and layer_to_move == 0 else layer_to_move] = layer[k]
 
         if layer_to_move == 0:
             if reverse:
@@ -192,7 +192,6 @@ def turnVertical(layer_to_move, nb=1, reverse=False):
 
 
 while True:
-    os.system("cls")
     for z in range(len(cube)):
         for y in range(len(cube[z])):
             row = ""
@@ -249,3 +248,9 @@ while True:
         turnVertical(0)
     elif turn == "L2":
         turnVertical(0, 2)
+    elif turn == "M":
+        turnVertical(1, reverse=True)
+    elif turn == "M'":
+        turnVertical(1)
+    elif turn == "M2":
+        turnVertical(1, 2)
