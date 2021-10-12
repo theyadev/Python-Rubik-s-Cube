@@ -180,8 +180,8 @@ def turnFront(layer_to_move, nb=1, reverse=False):
                     cube[index][0 if layer_to_move == 0 else 2 if layer_to_move == 2 else 1][k] = layer[k] if reverse else layer[::-1][k]
 
         if layer_to_move == 2:
-            rotateCorners(4, reverse)
-            rotateArrets(4, reverse)
+            rotateCorners(4, not reverse)
+            rotateArrets(4, not reverse)
 
         elif layer_to_move == 0:
             rotateCorners(2, reverse)
@@ -212,33 +212,33 @@ def printCube():
             else:
                 printAt((z - 1) * 7 + 1, 5 + y, row)
 
-def shuffleCube(length_shuffle = 20):  
-
+def shuffleCube(length_shuffle = 25):  
     moves = "UDERLMFBS"
 
     shuffle = ""
 
     for i in range(length_shuffle):
-        number = "2" if randint(0,1) == 1 else ""
+        number = "2" if randint(0,2) == 1 else ""
         prime = "'" if number == "" and randint(0,1) == 1 else ""
         letter = moves[randint(0,len(moves)-1)]
         shuffle += letter + number + prime
-        
-    moveCube(shuffle, 0.1)
+       
+    return shuffle
 
 
 
 def moveCube(alg, speed):
     for i,turn in enumerate(alg):
-        if turn == "'":
+        if turn == "'" or turn == "2":
             continue
 
         try:
             if alg[i+1] == "'":
                 turn += "'"
+            elif alg[i+1] == "2":
+                turn += "2"
         except:
             pass
-
 
         if turn == "U":
             turnHorizontal(0)
@@ -298,14 +298,11 @@ def moveCube(alg, speed):
         printCube()
         sleep(speed)
         
-shuffleCube()
+shuffle = shuffleCube()
+moveCube(shuffle, 0.1)
+printCube()
 
 while True:
-    printCube()
-
+    print("\n" + shuffle)
     algo = input('\nQue voulez vous tourner ? \033[K').upper()
-
-    moveCube(algo, 0.5)
-    
-        
-
+    moveCube(algo, 0.2)
