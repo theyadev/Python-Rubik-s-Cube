@@ -1,4 +1,5 @@
 import os
+from time import sleep
 
 os.system('cls')
 cube = [[
@@ -185,9 +186,7 @@ def turnFront(layer_to_move, nb=1, reverse=False):
             rotateCorners(2, reverse)
             rotateArrets(2, reverse)
 
-
-
-while True:
+def printCube():
     for z in range(len(cube)):
         for y in range(len(cube[z])):
             row = ""
@@ -212,60 +211,78 @@ while True:
             else:
                 printAt((z - 1) * 7 + 1, 5 + y, row)
 
-    turn = input('\nQue voulez vous tourner ? \033[K').upper()
+while True:
+    printCube()
 
-    if turn == "U":
-        turnHorizontal(0)
-    elif turn == "U'":
-        turnHorizontal(0, reverse=True)
-    elif turn == "U2":
-        turnHorizontal(0, 2)
-    elif turn == "D":
-        turnHorizontal(2, reverse=True)
-    elif turn == "D'":
-        turnHorizontal(2)
-    elif turn == "D2":
-        turnHorizontal(2, 2)
-    elif turn == "E":
-        turnHorizontal(1, reverse=True)
-    elif turn == "E'":
-        turnHorizontal(1)
-    elif turn == "E2":
-        turnHorizontal(1, 2)
-    elif turn == "R":
-        turnVertical(2)
-    elif turn == "R'":
-        turnVertical(2, reverse=True)
-    elif turn == "R2":
-        turnVertical(2, 2)
-    elif turn == "L":
-        turnVertical(0, reverse=True)
-    elif turn == "L'":
-        turnVertical(0)
-    elif turn == "L2":
-        turnVertical(0, 2)
-    elif turn == "M":
-        turnVertical(1, reverse=True)
-    elif turn == "M'":
-        turnVertical(1)
-    elif turn == "M2":
-        turnVertical(1, 2)
-    elif turn == "F":
-        turnFront(0)
-    elif turn == "F'":
-        turnFront(0, reverse=True)
-    elif turn == "F2":
-        turnFront(0,2)
-    elif turn == "B":
-        turnFront(2, reverse=True)
-    elif turn == "B'":
-        turnFront(2)
-    elif turn == "B2":
-        turnFront(2,2)
-    elif turn == "S":
-        turnFront(1)
-    elif turn == "S'":
-        turnFront(1, reverse=True)
-    elif turn == "S2":
-        turnFront(1,2)
+    algo= input('\nQue voulez vous tourner ? \033[K').upper()
+
+
+    for i,turn in enumerate(algo):
+        printCube()
+        sleep(0.5)
+        if turn == "'":
+            continue
+
+        try:
+            if algo[i+1] == "'":
+                turn += "'"
+        except:
+            pass
+
+
+        if turn == "U":
+            turnHorizontal(0)
+        elif turn == "U'":
+            turnHorizontal(0, reverse=True)
+        elif turn == "U2":
+            turnHorizontal(0, 2)
+        elif turn == "D":
+            turnHorizontal(2, reverse=True)
+        elif turn == "D'":
+            turnHorizontal(2)
+        elif turn == "D2":
+            turnHorizontal(2, 2)
+        elif turn == "E":
+            turnHorizontal(1, reverse=True)
+        elif turn == "E'":
+            turnHorizontal(1)
+        elif turn == "E2":
+            turnHorizontal(1, 2)
+        elif turn == "R":
+            turnVertical(2)
+        elif turn == "R'":
+            turnVertical(2, reverse=True)
+        elif turn == "R2":
+            turnVertical(2, 2)
+        elif turn == "L":
+            turnVertical(0, reverse=True)
+        elif turn == "L'":
+            turnVertical(0)
+        elif turn == "L2":
+            turnVertical(0, 2)
+        elif turn == "M":
+            turnVertical(1, reverse=True)
+        elif turn == "M'":
+            turnVertical(1)
+        elif turn == "M2":
+            turnVertical(1, 2)
+        elif turn == "F":
+            turnFront(0)
+        elif turn == "F'":
+            turnFront(0, reverse=True)
+        elif turn == "F2":
+            turnFront(0,2)
+        elif turn == "B":
+            turnFront(2, reverse=True)
+        elif turn == "B'":
+            turnFront(2)
+        elif turn == "B2":
+            turnFront(2,2)
+        elif turn == "S":
+            turnFront(1)
+        elif turn == "S'":
+            turnFront(1, reverse=True)
+        elif turn == "S2":
+            turnFront(1,2)
+        
 
