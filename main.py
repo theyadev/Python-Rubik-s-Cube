@@ -56,19 +56,24 @@ def turnHorizontal(layer_to_move, nb=1, reverse=False):
             index = 0
             layer_index, layer = HORIZONTAL_LAYERS[i]
 
-            if reverse == True:
+            if reverse:
                 if layer_index == 4:
                     index = 1
                 else:
                     index = layer_index + 1
             else:
                 if layer_index == 1:
-                    # if i == 0:
                     index = 4
                 else:
                     index = layer_index - 1
 
             cube[index][layer_to_move] = layer
+
+        def rotate(layer, reverse=False):
+            if reverse:
+                (cube[layer][2][0], cube[layer][2][2], cube[layer][0][0],
+                 cube[layer][0][2]) = (cube[layer][0][0], cube[layer][2][0],
+                                       cube[layer][0][2], cube[layer][2][2])
 
         if layer_to_move == 2:
             if reverse:
@@ -94,13 +99,7 @@ def turnHorizontal(layer_to_move, nb=1, reverse=False):
 
         elif layer_to_move == 0:
             if reverse:
-                # Corners
-                (cube[layer_to_move][2][0], cube[layer_to_move][2][2],
-                 cube[layer_to_move][0][0],
-                 cube[layer_to_move][0][2]) = (cube[layer_to_move][0][0],
-                                               cube[layer_to_move][2][0],
-                                               cube[layer_to_move][0][2],
-                                               cube[layer_to_move][2][2])
+                rotate(layer_to_move, reverse)
 
                 # Arrettes
                 (cube[layer_to_move][1][2], cube[layer_to_move][2][1],
@@ -133,19 +132,23 @@ def turnVertical(layer_to_move, nb=1, reverse=False):
         VERTICAL_LAYERS = [
             (j, [cube[j][k][layer_to_move] for k in range(len(cube[j]))])
             for j in range(len(cube))
-            if j != 1 and j != 3 and j != 4 and j != 0
+            if j != 1 and j != 3 and j != 4 and j != 0 and j !=5
         ]
         if reverse == True:
             VERTICAL_LAYERS.append((4, [
-                cube[4][0][0 if layer_to_move == 2 else 2 if layer_to_move ==
+                cube[4][2][0 if layer_to_move == 2 else 2 if layer_to_move ==
                            0 else 1], cube[4][1]
                 [0 if layer_to_move == 2 else 2 if layer_to_move == 0 else 1],
-                cube[4][2][0 if layer_to_move == 2 else 2 if layer_to_move ==
+                cube[4][0][0 if layer_to_move == 2 else 2 if layer_to_move ==
                            0 else 1]
             ]))
             VERTICAL_LAYERS.append((0, [
                 cube[0][0][layer_to_move], cube[0][1][layer_to_move],
                 cube[0][2][layer_to_move]
+            ]))
+            VERTICAL_LAYERS.append((5, [
+                cube[5][2][layer_to_move], cube[5][1][layer_to_move],
+                cube[5][0][layer_to_move]
             ]))
         else:
             VERTICAL_LAYERS.append((4, [
@@ -159,29 +162,23 @@ def turnVertical(layer_to_move, nb=1, reverse=False):
                 cube[0][2][layer_to_move], cube[0][1][layer_to_move],
                 cube[0][0][layer_to_move]
             ]))
+            VERTICAL_LAYERS.append((5, [
+                cube[5][0][layer_to_move], cube[5][1][layer_to_move],
+                cube[5][2][layer_to_move]
+            ]))
 
         for D in range(len(VERTICAL_LAYERS)):
             index = 0
             layer_index, layer = VERTICAL_LAYERS[D]
 
-            if reverse:
-                if layer_index == 0:
-                    index = 2
-                elif layer_index == 2:
-                    index = 5
-                elif layer_index == 4:
-                    index = 0
-                elif layer_index == 5:
-                    index = 4
-            else:
-                if layer_index == 0:
-                    index = 4
-                elif layer_index == 2:
-                    index = 0
-                elif layer_index == 4:
-                    index = 5
-                elif layer_index == 5:
-                    index = 2
+            if layer_index == 0:
+                index = 2 if reverse else 4
+            elif layer_index == 2:
+                index = 5 if reverse else 0
+            elif layer_index == 4:
+                index = 0 if reverse else 5
+            elif layer_index == 5:
+                index = 4 if reverse else 2
 
             for k in range(len(layer)):
                 cube[index][k][0 if index == 4 and layer_to_move ==
