@@ -24,8 +24,8 @@ def Horizontal(layer_to_move, nb=1, reverse=False):
             cube[index][layer_to_move] = layer
 
         if layer_to_move == 2:
-            rotate.Corners(5, reverse)
-            rotate.Edges(5,reverse)
+            rotate.Corners(5, not reverse)
+            rotate.Edges(5, not reverse)
 
         elif layer_to_move == 0:
             rotate.Corners(layer_to_move, reverse)
