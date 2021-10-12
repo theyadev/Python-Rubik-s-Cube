@@ -16,3 +16,4 @@ def askShuffle():
             print("Il y a eu une erreur, le cube n'a pas été mélanger")
             input("Entrée pour continuer...")
             clear()
+    clear()
