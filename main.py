@@ -47,9 +47,31 @@ class BackgroundColors:
     RESET = '\033[49m'
     RESET_ALL = '\033[0m'
 
+def rotateCorners(face, reverse=False):
+    if reverse:
+        (cube[face][2][0], cube[face][2][2], cube[face][0][0],
+            cube[face][0][2]) = (cube[face][0][0], cube[face][2][0],
+                                cube[face][0][2], cube[face][2][2])
+    else:
+        (cube[face][0][0], cube[face][2][0], cube[face][0][2],
+            cube[face][2][2]) = (cube[face][2][0], cube[face][2][2], cube[face][0][0],
+                            cube[face][0][2])
+def rotateArrets(face, reverse=False):
+    if reverse:
+        (cube[face][1][2], cube[face][2][1],
+            cube[face][1][0],
+            cube[face][0][1]) = (cube[face][2][1],
+                                        cube[face][1][0],
+                                        cube[face][0][1],
+                                        cube[face][1][2])
+    else:
+        (cube[face][2][1], cube[face][1][0], cube[face][0][1],
+            cube[face][1][2]) = (cube[face][1][2], cube[face][2][1], cube[face][1][0],
+                            cube[face][0][1])
+
 
 def turnHorizontal(layer_to_move, nb=1, reverse=False):
-    for i in range(nb):
+    for loop in range(nb):
         HORIZONTAL_LAYERS = [(j, cube[j][layer_to_move])
                              for j in range(len(cube)) if j != 0 and j != 5]
         for i in range(len(HORIZONTAL_LAYERS)):
@@ -69,103 +91,32 @@ def turnHorizontal(layer_to_move, nb=1, reverse=False):
 
             cube[index][layer_to_move] = layer
 
-        def rotate(layer, reverse=False):
-            if reverse:
-                (cube[layer][2][0], cube[layer][2][2], cube[layer][0][0],
-                 cube[layer][0][2]) = (cube[layer][0][0], cube[layer][2][0],
-                                       cube[layer][0][2], cube[layer][2][2])
-
         if layer_to_move == 2:
-            if reverse:
-                # Corners
-                (cube[5][0][0], cube[5][2][0], cube[5][0][2],
-                 cube[5][2][2]) = (cube[5][2][0], cube[5][2][2], cube[5][0][0],
-                                   cube[5][0][2])
-
-                # Arrettes
-                (cube[5][2][1], cube[5][1][0], cube[5][0][1],
-                 cube[5][1][2]) = (cube[5][1][2], cube[5][2][1], cube[5][1][0],
-                                   cube[5][0][1])
-            else:
-                # Corners
-                (cube[5][2][0], cube[5][2][2], cube[5][0][0],
-                 cube[5][0][2]) = (cube[5][0][0], cube[5][2][0], cube[5][0][2],
-                                   cube[5][2][2])
-
-                # Arrettes
-                (cube[5][1][2], cube[5][2][1], cube[5][1][0],
-                 cube[5][0][1]) = (cube[5][2][1], cube[5][1][0], cube[5][0][1],
-                                   cube[5][1][2])
+            rotateCorners(5, reverse)
+            rotateArrets(5,reverse)
 
         elif layer_to_move == 0:
-            if reverse:
-                rotate(layer_to_move, reverse)
-
-                # Arrettes
-                (cube[layer_to_move][1][2], cube[layer_to_move][2][1],
-                 cube[layer_to_move][1][0],
-                 cube[layer_to_move][0][1]) = (cube[layer_to_move][2][1],
-                                               cube[layer_to_move][1][0],
-                                               cube[layer_to_move][0][1],
-                                               cube[layer_to_move][1][2])
-
-            else:
-                # Corners
-                (cube[layer_to_move][0][0], cube[layer_to_move][2][0],
-                 cube[layer_to_move][0][2],
-                 cube[layer_to_move][2][2]) = (cube[layer_to_move][2][0],
-                                               cube[layer_to_move][2][2],
-                                               cube[layer_to_move][0][0],
-                                               cube[layer_to_move][0][2])
-
-                # Arrettes
-                (cube[layer_to_move][2][1], cube[layer_to_move][1][0],
-                 cube[layer_to_move][0][1],
-                 cube[layer_to_move][1][2]) = (cube[layer_to_move][1][2],
-                                               cube[layer_to_move][2][1],
-                                               cube[layer_to_move][1][0],
-                                               cube[layer_to_move][0][1])
+            rotateCorners(layer_to_move, reverse)
+            rotateArrets(layer_to_move, reverse)
 
 
 def turnVertical(layer_to_move, nb=1, reverse=False):
-    for i in range(nb):
-        VERTICAL_LAYERS = [
-            (j, [cube[j][k][layer_to_move] for k in range(len(cube[j]))])
-            for j in range(len(cube))
-            if j != 1 and j != 3 and j != 4 and j != 0 and j !=5
-        ]
-        if reverse == True:
-            VERTICAL_LAYERS.append((4, [
-                cube[4][2][0 if layer_to_move == 2 else 2 if layer_to_move ==
-                           0 else 1], cube[4][1]
-                [0 if layer_to_move == 2 else 2 if layer_to_move == 0 else 1],
-                cube[4][0][0 if layer_to_move == 2 else 2 if layer_to_move ==
-                           0 else 1]
-            ]))
-            VERTICAL_LAYERS.append((0, [
-                cube[0][0][layer_to_move], cube[0][1][layer_to_move],
-                cube[0][2][layer_to_move]
-            ]))
-            VERTICAL_LAYERS.append((5, [
-                cube[5][2][layer_to_move], cube[5][1][layer_to_move],
-                cube[5][0][layer_to_move]
-            ]))
-        else:
-            VERTICAL_LAYERS.append((4, [
-                cube[4][2][0 if layer_to_move == 2 else 2 if layer_to_move ==
-                           0 else 1], cube[4][1]
-                [0 if layer_to_move == 2 else 2 if layer_to_move == 0 else 1],
-                cube[4][0][0 if layer_to_move == 2 else 2 if layer_to_move ==
-                           0 else 1]
-            ]))
-            VERTICAL_LAYERS.append((0, [
-                cube[0][2][layer_to_move], cube[0][1][layer_to_move],
-                cube[0][0][layer_to_move]
-            ]))
-            VERTICAL_LAYERS.append((5, [
-                cube[5][0][layer_to_move], cube[5][1][layer_to_move],
-                cube[5][2][layer_to_move]
-            ]))
+    for loop in range(nb):
+        VERTICAL_LAYERS = [(j, [cube[j][k][layer_to_move] for k in range(len(cube[j]))]) for j in range(len(cube)) if j != 1 and j != 3 and j != 4 and j != 0 and j != 5]
+        
+        VERTICAL_LAYERS.append((4, [
+            cube[4][2][0 if layer_to_move == 2 else 2 if layer_to_move == 0 else 1], cube[4][1][0 if layer_to_move == 2 else 2 if layer_to_move == 0 else 1],cube[4][0][0 if layer_to_move == 2 else 2 if layer_to_move == 0 else 1]
+        ]))
+            
+        VERTICAL_LAYERS.append((0, [
+            cube[0][0 if reverse else 2][layer_to_move], cube[0][1][layer_to_move],
+            cube[0][2 if reverse else 0][layer_to_move]
+        ]))
+        
+        VERTICAL_LAYERS.append((5, [
+            cube[5][2 if reverse else 0][layer_to_move], cube[5][1][layer_to_move],
+            cube[5][0 if reverse else 2][layer_to_move]
+        ]))
 
         for D in range(len(VERTICAL_LAYERS)):
             index = 0
@@ -185,82 +136,55 @@ def turnVertical(layer_to_move, nb=1, reverse=False):
                                2 else 2 if index == 4 and layer_to_move ==
                                0 else layer_to_move] = layer[k]
 
-        if layer_to_move == 0:
-            if reverse:
-                # Corners
-                (cube[layer_to_move + 1][0][0], cube[layer_to_move + 1][2][0],
-                 cube[layer_to_move + 1][0][2],
-                 cube[layer_to_move +
-                      1][2][2]) = (cube[layer_to_move + 1][2][0],
-                                   cube[layer_to_move + 1][2][2],
-                                   cube[layer_to_move + 1][0][0],
-                                   cube[layer_to_move + 1][0][2])
+        if layer_to_move == 2:
+            rotateCorners(layer_to_move + 1, reverse)
+            rotateArrets(layer_to_move + 1,reverse)
 
-                # Arrettes
-                (cube[layer_to_move + 1][2][1], cube[layer_to_move + 1][1][0],
-                 cube[layer_to_move + 1][0][1],
-                 cube[layer_to_move +
-                      1][1][2]) = (cube[layer_to_move + 1][1][2],
-                                   cube[layer_to_move + 1][2][1],
-                                   cube[layer_to_move + 1][1][0],
-                                   cube[layer_to_move + 1][0][1])
-            else:
-                # Corners
-                (cube[layer_to_move + 1][2][0], cube[layer_to_move + 1][2][2],
-                 cube[layer_to_move + 1][0][0],
-                 cube[layer_to_move +
-                      1][0][2]) = (cube[layer_to_move + 1][0][0],
-                                   cube[layer_to_move + 1][2][0],
-                                   cube[layer_to_move + 1][0][2],
-                                   cube[layer_to_move + 1][2][2])
+        elif layer_to_move == 0:
+            rotateCorners(layer_to_move + 1, not reverse)
+            rotateArrets(layer_to_move + 1, not reverse)
 
-                # Arrettes
-                (cube[layer_to_move + 1][1][2], cube[layer_to_move + 1][2][1],
-                 cube[layer_to_move + 1][1][0],
-                 cube[layer_to_move +
-                      1][0][1]) = (cube[layer_to_move + 1][2][1],
-                                   cube[layer_to_move + 1][1][0],
-                                   cube[layer_to_move + 1][0][1],
-                                   cube[layer_to_move + 1][1][2])
 
-        elif layer_to_move == 2:
-            if reverse:
-                # Corners
-                (cube[layer_to_move + 1][2][0], cube[layer_to_move + 1][2][2],
-                 cube[layer_to_move + 1][0][0],
-                 cube[layer_to_move +
-                      1][0][2]) = (cube[layer_to_move + 1][0][0],
-                                   cube[layer_to_move + 1][2][0],
-                                   cube[layer_to_move + 1][0][2],
-                                   cube[layer_to_move + 1][2][2])
+def turnFront(layer_to_move, nb=1, reverse=False):
+    for loop in range(nb):
+        FRONT_LAYERS = [
+            (0, [cube[0][2 if layer_to_move == 0 else 0 if layer_to_move == 2 else 1][k] for k in range(len(cube[0]))]),
+            (1, [cube[1][k][2 if layer_to_move == 0 else 0 if layer_to_move == 2 else 1] for k in range(len(cube[0]))]),
+            (3, [cube[3][k][0 if layer_to_move == 0 else 2 if layer_to_move == 2 else 1] for k in range(len(cube[0]))]),
+            (5, [cube[5][0 if layer_to_move == 0 else 2 if layer_to_move == 2 else 1][k] for k in range(len(cube[0]))])
+        ]
 
-                # Arrettes
-                (cube[layer_to_move + 1][1][2], cube[layer_to_move + 1][2][1],
-                 cube[layer_to_move + 1][1][0],
-                 cube[layer_to_move +
-                      1][0][1]) = (cube[layer_to_move + 1][2][1],
-                                   cube[layer_to_move + 1][1][0],
-                                   cube[layer_to_move + 1][0][1],
-                                   cube[layer_to_move + 1][1][2])
+        for D in range(len(FRONT_LAYERS)):
+            index = 0
+            layer_index, layer = FRONT_LAYERS[D]
 
-            else:
-                # Corners
-                (cube[layer_to_move + 1][0][0], cube[layer_to_move + 1][2][0],
-                 cube[layer_to_move + 1][0][2],
-                 cube[layer_to_move +
-                      1][2][2]) = (cube[layer_to_move + 1][2][0],
-                                   cube[layer_to_move + 1][2][2],
-                                   cube[layer_to_move + 1][0][0],
-                                   cube[layer_to_move + 1][0][2])
+            if layer_index == 0:
+                index = 3 if not reverse else 1
+            elif layer_index == 1:
+                index = 0 if not reverse else 5
+            elif layer_index == 3:
+                index = 5 if not reverse else 0
+            elif layer_index == 5:
+                index = 1 if not reverse else 3
 
-                # Arrettes
-                (cube[layer_to_move + 1][2][1], cube[layer_to_move + 1][1][0],
-                 cube[layer_to_move + 1][0][1],
-                 cube[layer_to_move +
-                      1][1][2]) = (cube[layer_to_move + 1][1][2],
-                                   cube[layer_to_move + 1][2][1],
-                                   cube[layer_to_move + 1][1][0],
-                                   cube[layer_to_move + 1][0][1])
+            for k in range(len(layer)):
+                if index == 0 :
+                    cube[index][2 if layer_to_move == 0 else 0 if layer_to_move == 2 else 1][k] = layer[k] if reverse else layer[::-1][k] 
+                elif index == 1 :
+                    cube[index][k][2 if layer_to_move == 0 else 0 if layer_to_move == 2 else 1] = layer[::-1][k] if reverse else layer[k] 
+                elif index == 3 :
+                    cube[index][k][0 if layer_to_move == 0 else 2 if layer_to_move == 2 else 1] = layer[::-1][k] if reverse else layer[k] 
+                elif index == 5 :
+                    cube[index][0 if layer_to_move == 0 else 2 if layer_to_move == 2 else 1][k] = layer[k] if reverse else layer[::-1][k]
+
+        if layer_to_move == 2:
+            rotateCorners(4, reverse)
+            rotateArrets(4, reverse)
+
+        elif layer_to_move == 0:
+            rotateCorners(2, reverse)
+            rotateArrets(2, reverse)
+
 
 
 while True:
@@ -302,11 +226,11 @@ while True:
         turnHorizontal(2)
     elif turn == "D2":
         turnHorizontal(2, 2)
-    elif turn == "S":
+    elif turn == "E":
         turnHorizontal(1, reverse=True)
-    elif turn == "S'":
+    elif turn == "E'":
         turnHorizontal(1)
-    elif turn == "S2":
+    elif turn == "E2":
         turnHorizontal(1, 2)
     elif turn == "R":
         turnVertical(2)
@@ -326,3 +250,22 @@ while True:
         turnVertical(1)
     elif turn == "M2":
         turnVertical(1, 2)
+    elif turn == "F":
+        turnFront(0)
+    elif turn == "F'":
+        turnFront(0, reverse=True)
+    elif turn == "F2":
+        turnFront(0,2)
+    elif turn == "B":
+        turnFront(2, reverse=True)
+    elif turn == "B'":
+        turnFront(2)
+    elif turn == "B2":
+        turnFront(2,2)
+    elif turn == "S":
+        turnFront(1)
+    elif turn == "S'":
+        turnFront(1, reverse=True)
+    elif turn == "S2":
+        turnFront(1,2)
+
