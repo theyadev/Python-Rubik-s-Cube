@@ -304,5 +304,5 @@ printCube()
 
 while True:
     print("\n" + shuffle)
-    algo = input('\nQue voulez vous tourner ? \033[K').upper()
+    algo = input('\nQue voulez vous tourner ? \033[K').upper().replace(' ', "")
     moveCube(algo, 0.2)
