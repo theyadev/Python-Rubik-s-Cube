@@ -6,29 +6,29 @@ Projet réalisé avec [Darkdragonnier](https://github.com/fmaret)
 
 Un rubik's cube visualisé dans le terminal en 2 dimensions !
 
-### Features
+### Fonctionnalités
 
 - Déplacement de chaque colonnes et lignes.
 - Mélange automatique.
 - Notations officielles supportées !
 
-### Built with
+### Développer avec
 
 - Python
 - Love
 
-## Getting started
+## Le Projet
 
-### Prerequisites
+### Prérequis
 
 Python 3.10
 Un terminal supportant les emojis
 
-### Install
+### Installation
 
 Lancer main.py
 
-### Usage
+### Utilisation
 
 [Voir les notations](https://jperm.net/3x3/moves)
 
