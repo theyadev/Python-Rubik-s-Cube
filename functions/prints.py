@@ -1,4 +1,5 @@
 from variables import *
+from Colors import BackgroundColors
 
 def printAt(x, y, text):
     print(f"\033[{y};{x}H{text}")
@@ -9,17 +10,17 @@ def printCube():
             row = ""
             for x in range(len(cube[z][y])):
                 if cube[z][y][x] == 6:
-                    row += f"🔳"
+                    row += f"{BackgroundColors.WHITE}  {BackgroundColors.RESET}"
                 elif cube[z][y][x] == 2:
-                    row += f"🟥"
+                    row += f"{BackgroundColors.RED}  {BackgroundColors.RESET}"
                 elif cube[z][y][x] == 3:
-                    row += f"🟩"
+                    row += f"{BackgroundColors.GREEN}  {BackgroundColors.RESET}"
                 elif cube[z][y][x] == 4:
-                    row += f"🟧"
+                    row += f"{BackgroundColors.MAGENTA}  {BackgroundColors.RESET}"
                 elif cube[z][y][x] == 5:
-                    row += f"🟦"
+                    row += f"{BackgroundColors.BLUE}  {BackgroundColors.RESET}"
                 elif cube[z][y][x] == 1:
-                    row += f"🟨"
+                    row += f"{BackgroundColors.YELLOW}  {BackgroundColors.RESET}"
 
             if z == 0:
                 printAt(8, 1 + y, row)

@@ -1,5 +1,6 @@
 import sys
 sys.path.append("./functions")
+sys.path.append("./Classes")
 
 from clear import clear
 from prints import printCube
