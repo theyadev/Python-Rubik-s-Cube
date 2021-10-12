@@ -22,7 +22,7 @@ Un rubik's cube visualisé dans le terminal en 2 dimensions !
 ### Prérequis
 
 Python 3.10
-Un terminal supportant les emojis
+Un terminal supportant les emojis comme [Le nouveau terminal Windows](https://www.microsoft.com/fr-fr/p/windows-terminal-preview/9n0dx20hk701?activetab=pivot:overviewtab)
 
 ### Installation
 
