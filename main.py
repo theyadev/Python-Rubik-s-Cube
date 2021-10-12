@@ -1,5 +1,6 @@
 import os
 from time import sleep
+from random import randint
 
 os.system('cls')
 cube = [[
@@ -211,20 +212,29 @@ def printCube():
             else:
                 printAt((z - 1) * 7 + 1, 5 + y, row)
 
-while True:
-    printCube()
+def shuffleCube(length_shuffle = 20):  
 
-    algo= input('\nQue voulez vous tourner ? \033[K').upper()
+    moves = "UDERLMFBS"
+
+    shuffle = ""
+
+    for i in range(length_shuffle):
+        number = "2" if randint(0,1) == 1 else ""
+        prime = "'" if number == "" and randint(0,1) == 1 else ""
+        letter = moves[randint(0,len(moves)-1)]
+        shuffle += letter + number + prime
+        
+    moveCube(shuffle, 0.1)
 
 
-    for i,turn in enumerate(algo):
-        printCube()
-        sleep(0.5)
+
+def moveCube(alg, speed):
+    for i,turn in enumerate(alg):
         if turn == "'":
             continue
 
         try:
-            if algo[i+1] == "'":
+            if alg[i+1] == "'":
                 turn += "'"
         except:
             pass
@@ -284,5 +294,18 @@ while True:
             turnFront(1, reverse=True)
         elif turn == "S2":
             turnFront(1,2)
+
+        printCube()
+        sleep(speed)
+        
+shuffleCube()
+
+while True:
+    printCube()
+
+    algo = input('\nQue voulez vous tourner ? \033[K').upper()
+
+    moveCube(algo, 0.5)
+    
         
 
