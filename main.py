@@ -2,7 +2,6 @@ import os
 from time import sleep
 from random import randint
 
-os.system('cls')
 cube = [[
     [1, 1, 1],
     [1, 1, 1],
@@ -298,11 +297,14 @@ def moveCube(alg, speed):
         printCube()
         sleep(speed)
         
-shuffle = shuffleCube(10)
-moveCube(shuffle, 0.1)
+shuffle_input = input('Voulez vous mélanger le cube avant de commencer ? ')
+
+os.system('cls')
+if shuffle_input == "yes" or shuffle_input == 'y' or shuffle_input == 'o' or shuffle_input == 'oui':
+    shuffle = shuffleCube(10)
+    moveCube(shuffle, 0.1)
 printCube()
 
 while True:
-    print("\n" + shuffle)
     algo = input('\nQue voulez vous tourner ? \033[K').upper().replace(' ', "")
     moveCube(algo, 0.2)
