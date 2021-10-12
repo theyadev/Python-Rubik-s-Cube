@@ -25,11 +25,11 @@ def Horizontal(layer_to_move, nb=1, reverse=False):
 
         if layer_to_move == 2:
             rotate.Corners(5, reverse)
-            rotate.Arrets(5,reverse)
+            rotate.Edges(5,reverse)
 
         elif layer_to_move == 0:
             rotate.Corners(layer_to_move, reverse)
-            rotate.Arrets(layer_to_move, reverse)
+            rotate.Edges(layer_to_move, reverse)
 
 
 def Vertical(layer_to_move, nb=1, reverse=False):
@@ -70,11 +70,11 @@ def Vertical(layer_to_move, nb=1, reverse=False):
 
         if layer_to_move == 2:
             rotate.Corners(layer_to_move + 1, reverse)
-            rotate.Arrets(layer_to_move + 1,reverse)
+            rotate.Edges(layer_to_move + 1,reverse)
 
         elif layer_to_move == 0:
             rotate.Corners(layer_to_move + 1, not reverse)
-            rotate.Arrets(layer_to_move + 1, not reverse)
+            rotate.Edges(layer_to_move + 1, not reverse)
 
 
 def Front(layer_to_move, nb=1, reverse=False):
@@ -111,8 +111,8 @@ def Front(layer_to_move, nb=1, reverse=False):
 
         if layer_to_move == 2:
             rotate.Corners(4, not reverse)
-            rotate.Arrets(4, not reverse)
+            rotate.Edges(4, not reverse)
 
         elif layer_to_move == 0:
             rotate.Corners(2, reverse)
-            rotate.Arrets(2, reverse)
+            rotate.Edges(2, reverse)

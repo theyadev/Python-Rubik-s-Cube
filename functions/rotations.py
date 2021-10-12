@@ -10,7 +10,7 @@ def Corners(face, reverse=False):
             cube[face][2][2]) = (cube[face][2][0], cube[face][2][2], cube[face][0][0],
                             cube[face][0][2])
                             
-def Arrets(face, reverse=False):
+def Edges(face, reverse=False):
     if reverse:
         (cube[face][1][2], cube[face][2][1],
             cube[face][1][0],
