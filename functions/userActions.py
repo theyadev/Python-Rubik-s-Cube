@@ -2,7 +2,7 @@ from clear import clear
 from cubeActions import moveCube, getShuffle
 
 def askShuffle():
-    shuffle_input = input('Voulez vous mélanger le cube avant de commencer ? ')
+    shuffle_input = input('Voulez vous mélanger le cube avant de commencer ? ').lower()
     
     if shuffle_input == "yes" or shuffle_input == 'y' or shuffle_input == 'o' or shuffle_input == 'oui':
         try:
